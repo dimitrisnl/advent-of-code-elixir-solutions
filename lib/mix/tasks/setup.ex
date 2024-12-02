@@ -14,23 +14,14 @@ defmodule Mix.Tasks.Setup do
     base_path = Utils.get_base_path(year, day)
     File.mkdir_p!(base_path)
 
-    test_path = Utils.get_test_path(year, day)
-    File.mkdir_p!(test_path)
-
-    create_files(base_path, test_path, year, day)
+    create_files(base_path, year, day)
     download_files(base_path, year, day)
   end
 
-  defp create_files(base_path, test_path, year, day) do
-    # Create solution file
+  defp create_files(base_path, year, day) do
     content = Template.build_solution(year, day)
     File.write!("#{base_path}/solution.ex", content)
     Mix.shell().info("Created solution template")
-
-    # Create test file
-    content = Template.build_test(year, day)
-    File.write!("#{test_path}/solution_test.exs", content)
-    Mix.shell().info("Created test template")
   end
 
   defp download_files(base_path, year, day) do
